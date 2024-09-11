@@ -16,16 +16,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   @Override
   public List<Employee> getAllEmployees() {
-    Employee employee1 = new Employee();
-    employee1.setEmail("tkealamakia@gmail.com");
-    employee1.setFirstName("Tom");
-    employee1.setLastName("Kealamakia");
-    Employee employee2 = new Employee();
-    employee2.setEmail("steve@apple.com");
-    employee2.setFirstName("Steve");
-    employee2.setLastName("Jobs");
-    return List.of(employee1, employee2);
+    return employeeRepository.findAll();
+  }
 
-//    return employeeRepository.findAll();
+  @Override
+  public void saveEmployee(Employee employee) {
+    this.employeeRepository.save(employee);
   }
 }
