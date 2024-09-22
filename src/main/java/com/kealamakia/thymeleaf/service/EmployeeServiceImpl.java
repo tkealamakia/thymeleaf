@@ -5,6 +5,7 @@ import com.kealamakia.thymeleaf.repository.EmployeeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,8 +47,10 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
-  public Page<Employee> findPaginated(int pageNum, int pageSize) {
-    Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+  public Page<Employee> findPaginated(int pageNum, int pageSize, String sortField, String sortDirection) {
+    Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
+        Sort.by(sortField).descending();
+    Pageable pageable = PageRequest.of(pageNum - 1, pageSize, sort);
     return employeeRepository.findAll(pageable);
   }
 }
